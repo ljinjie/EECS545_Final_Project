@@ -4,13 +4,14 @@ import os
 import torch
 
 
-def save_checkpoint(model, epoch, checkpoint_dir):
+def save_checkpoint(model, epoch, checkpoint_dir, stats):
     """
     Save model checkpoint.
     """
     state = {
         'epoch': epoch,
         'state_dict': model.state_dict(),
+        'stats': stats,
     }
 
     if not os.path.exists(checkpoint_dir):
