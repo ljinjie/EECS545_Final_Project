@@ -11,7 +11,7 @@ import torch.optim as optim
 parser = argparse.ArgumentParser()
 parser.add_argument('--batch-size', type=int, default=4, help='batch-size fo training, default=4')
 parser.add_argument('--epochs', type=int, default=1000, help='number of training epochs, default=1000')
-parser.add_argument('--learning-rate', type=float, default=0.000001, help='learning rate, default=0.000001')
+parser.add_argument('--learning-rate', type=float, default=0.000001, help='learning rate, default=0.001')
 parser.add_argument('--momentum', type=float, default=0.9, help='momentum, default=0.9')
 parser.add_argument('--use-cpu', action='store_true', default=False, help='use CPU only for training, default=False')
 parser.add_argument('--in-channel', type=int, default=3, help='input channels, default=3')
