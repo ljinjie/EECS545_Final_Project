@@ -144,9 +144,6 @@ class SegNet(nn.Module):
         x = F.relu(self.DeBNS1_2(self.DeConvS1_2(x)))
         x = self.DeConvS1_1(x)
 
-        # SoftMax classifier
-        x = F.softmax(x, dim=-1)
-
         return x
 
     def init_weights(self):
