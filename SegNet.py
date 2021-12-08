@@ -2,8 +2,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
 
+
 class SegNet(nn.Module):
-    def __init__(self, in_channel=3, out_channel=32):
+    def __init__(self, in_channel=3, out_channel=31):
         super(SegNet, self).__init__()
 
         self.in_channel = in_channel
@@ -143,6 +144,9 @@ class SegNet(nn.Module):
         x = self.DeMP(x, EnS1_idx)
         x = F.relu(self.DeBNS1_2(self.DeConvS1_2(x)))
         x = self.DeConvS1_1(x)
+
+        # SoftMax classifier
+        # x = F.softmax(x, dim=-1)
 
         return x
 
