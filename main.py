@@ -9,8 +9,8 @@ import torch.optim as optim
 import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--batch-size', type=int, default=12, help='batch-size fo training, default=4')
-parser.add_argument('--epochs', type=int, default=400, help='number of training epochs, default=500')
+parser.add_argument('--batch-size', type=int, default=12, help='batch-size fo training, default=12')
+parser.add_argument('--epochs', type=int, default=1000, help='number of training epochs, default=1000')
 parser.add_argument('--learning-rate', type=float, default=0.001, help='learning rate, default=0.001')
 parser.add_argument('--momentum', type=float, default=0.9, help='momentum, default=0.9')
 parser.add_argument('--use-cpu', action='store_true', default=False, help='use CPU only for training, default=False')
@@ -56,9 +56,13 @@ if __name__ == '__main__':
     x_test_loader = torch.utils.data.DataLoader(x_test, batch_size=params.batch_size, shuffle=True, num_workers=2)
 
     # training
+    class_weights = torch.FloatTensor([38.40, 2.46, 0.66, 0.20, 0.03, 0.18, 14.68, 9.69,
+                                       3.89, 0.22, 1.00, 4.10, 1.17, 2.20, 1.75, 0.53,
+                                       1.69, 0.02, 0.52, 0.09, 3.81, 0.04, 0.39, 85.30,
+                                       1.32, 10000.00, 0.05, 0.80, 939.84, 0.36, 0.38]).to(device)
     model = SegNet(params.in_channel, params.out_channel).to(device)
     optimizer = optim.SGD(model.parameters(), lr=params.learning_rate, momentum=params.momentum)
-    criterion = nn.CrossEntropyLoss(ignore_index=-1)
+    criterion = nn.CrossEntropyLoss(weight=class_weights, ignore_index=-1)
 
     model, start_epoch, stats = checkpoint.restore_checkpoint(model, 'checkpoints', cuda=True, force=False)
 
